@@ -1,0 +1,76 @@
+<html>
+<head>
+  <title>Upload the file</title>
+</head>
+<body>
+  <form method="post" enctype="multipart/form-data" action="upload" onsubmit="return checkFileExtension()" onchange="checkFileSize()">
+  <table>
+  <tr>
+    <td><input type="file" name="filename" id="filename" /></td>
+  </tr>
+  <tr>
+    <td><input type="submit" name="sub" value="upload" /></td>
+  </tr>
+  </table>
+  </form>
+  <script>
+  function filename() {
+    var filename = document.getElementById("filename").files[0];
+    if(filename == undefined){
+      alert('Choose a file first');
+      return null;
+    }
+    var detailarr = [filename.name,filename.size,document.getElementById("filename").value];
+    return detailarr;
+  }
+
+  function checkFileSize(){
+    var detailarr = filename();
+    if(detailarr != null){
+    var filesize = detailarr[1] / 1000000;
+    if(filesize > 0){
+      if(filesize >10){
+        alert('File size must be in range 0-10 MB');
+      }
+    }
+    else{
+      alert('File size must be greater then zero');
+    }
+  }
+  }
+
+  function checkFileExtension(){
+    var detailarr = filename(); //have the filename and filesize
+    if( detailarr != null){
+      // alert(detailarr);
+      //have a file to be uploaded
+      var file = detailarr[0];
+      var size = detailarr[1];
+      var fileExtension = detailarr[0].split('.')[detailarr[0].split('.').length - 1];
+      if(fileExtension == 'png' || fileExtension == 'jpg' || fileExtension == 'jpeg' || fileExtension == 'png' || fileExtension == 'zip'){
+        if(size > 0){
+          if(filesize < 10){
+            return true;
+          }
+          else{
+            alert('File size must be in range 0-10 MB');
+          }
+        }
+        else{
+          alert('File size must be greater than zero');
+          return false;
+        }
+      }
+      else{
+        alert('Only zip and images are allowed');
+        return false;
+      }
+    }
+    else{
+      alert('Choose a file first');
+      return false;
+    }
+  }
+ </script>
+</body>
+</html>
